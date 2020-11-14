@@ -4,7 +4,7 @@
 	<title>Apple-like password generator</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="http://www.modernizr.com/downloads/modernizr-latest.js"></script>
+<!--	<script src="http://www.modernizr.com/downloads/modernizr-latest.js"></script>-->
 	<script type="text/javascript" src="placeholder.js"></script>
 	<script type="text/javascript" src="generator.js"></script>
 </head>
@@ -12,7 +12,9 @@
 
 	<h1 class="htitle">Apple-like password generator</h1>
 	<form id="slick-login">
-		<input type="text" name="luhn" class="placeholder" id="luhn" placeholder="Password">
+<!--		<input type="text" name="luhn" class="placeholder" id="luhn" placeholder="Password">-->
+		<output name="luhn" class="placeholder" id="luhn">Password</output>
+		<br> <br> <br>
 		<input type="button" id="GenerateIMEI" onclick="b_click()" value="Generate + Copy">
 	</form>
 	<div class="footer">

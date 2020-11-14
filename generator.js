@@ -31,9 +31,10 @@ function b_click(){
 
 	field_to_pass.value = some_pass;
 
-	/* Select the text field */
-	field_to_pass.select();
-	field_to_pass.setSelectionRange(0, 99999); /*For mobile devices*/
-	/* Copy the text inside the text field */
+	let dummy = document.createElement("textarea");
+	document.body.appendChild(dummy);
+	dummy.value = some_pass;
+	dummy.select();
 	document.execCommand("copy");
+	document.body.removeChild(dummy);
 }

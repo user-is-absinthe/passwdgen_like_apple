@@ -9,7 +9,7 @@
 
 Заходить сюда:
 
-site
+https://user-is-absinthe.github.io/passwdgen_like_apple/
 
 Стиль взят с генератора imei, спасибо kolyanok
 https://wpimeigenerator.github.io

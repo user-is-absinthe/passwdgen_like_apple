@@ -1,73 +1,173 @@
-// ywP-MUA-pA2-Awn
-// mycHum-ravwo1-zadcug
-// кол-во отрезков
-// длина отрезков
-// делаем, в итоге, 4 отрезка по 4 элемента
-// вроде убрал все похожие знаки
-// 1234-5678-9012-3456
-// 16 symbols + 3 "-"
+(function () {
+  // Базовые наборы
+  const UPPER_ALL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const LOWER_ALL = "abcdefghijklmnopqrstuvwxyz";
+  const DIGITS_ALL = "0123456789";
 
-let len_cut = 4  // длина маленького отрезочка
-let count_len = 3    // количество отрезков
+  // Наборы без двусмысленных (исключаем 0/O, 1/l/I, а также o и i)
+  const UPPER_NO_AMB = "ABCDEFGHJKLMNPQRSTUVWXYZ";   // нет I, O
+  const LOWER_NO_AMB = "abcdefghjkmnpqrstuvwxyz";    // нет i, l, o
+  const DIGITS_NO_AMB = "23456789";                  // нет 0, 1
 
-let alphabet = [
-	"A", "B", "C", "D", "E", "F", "G", "H",
-	"J", "K", "L", "M", "N", "P", "Q", "R",
-	"S", "T", "U", "V", "W", "X", "Y", "Z",
-	
-	"a", "b", "c", "d", "e", "f", "g", "h",
-	"j", "k", "m", "n", "o", "p", "q", "r",
-	"s", "t", "u", "v", "w", "x", "y", "z",
-	
-	"2", "3", "4", "5", "6", "7", "8", "9",
-	"2", "3", "4", "5", "6", "7", "8", "9",
-	"2", "3", "4", "5", "6", "7", "8", "9"
-];
+  // Спецсимволы: без тире, чтобы не путать с разделителем групп
+  const SPECIALS = "!@#$%^&*()_+[]{}<>?~.,;:|\\/";
 
-function b_click(){
-	let field_to_pass = document.getElementById("luhn");
+  const PLACEHOLDER = "— — —";
 
-	/*
-	let some_pass = "";
-	let counter = 0;
-	let count_sumbols = 0;
-	// while (some_pass.length < all_len + all_len % count_cut) {
-	while (count_sumbols < all_len + all_len % count_cut) {
-		if (counter === count_cut) {
-			some_pass += "-";
-			counter = 0;
-		}
-		else {
-			some_pass += alphabet[Math.floor(Math.random() * alphabet.length)];
-			counter ++;
-			count_sumbols ++;
+  function $(id) { return document.getElementById(id); }
 
-		}
-		// some_pass += alphabet[Math.floor(Math.random() * alphabet.length)];
-		// counter ++
-	}
-	*/
-	
-	let some_pass = ""
-	let coun_len_in = 0
-	while (coun_len_in < count_len) {
-		let small_pass = "";
-		while (small_pass.length < len_cut) {
-			small_pass += alphabet[Math.floor(Math.random() * alphabet.length)];
-		}
-		some_pass += small_pass;
-		if (coun_len_in < count_len - 1) {
-			some_pass += "-";
-		}
-		coun_len_in += 1;
-	}
+  function readInt(el, def, min, max) {
+    let v = parseInt(el.value, 10);
+    if (!Number.isFinite(v)) v = def;
+    if (min != null) v = Math.max(min, v);
+    if (max != null) v = Math.min(max, v);
+    return v;
+  }
 
-	field_to_pass.value = some_pass;
+  function buildCharset(opts) {
+    const upper = opts.excludeAmbiguous ? UPPER_NO_AMB : UPPER_ALL;
+    const lower = opts.excludeAmbiguous ? LOWER_NO_AMB : LOWER_ALL;
+    const digits = opts.excludeAmbiguous ? DIGITS_NO_AMB : DIGITS_ALL;
+    const specials = opts.includeSpecials ? SPECIALS : "";
+    return upper + lower + digits + specials;
+  }
 
-	let dummy = document.createElement("textarea");
-	document.body.appendChild(dummy);
-	dummy.value = some_pass;
-	dummy.select();
-	document.execCommand("copy");
-	document.body.removeChild(dummy);
-}
+  // Крипто-стойкая генерация индекса [0, max)
+  function randIndex(max) {
+    const cryptoObj = (typeof crypto !== "undefined" && crypto.getRandomValues) ? crypto : null;
+    if (!cryptoObj) return Math.floor(Math.random() * max);
+
+    const arr = new Uint32Array(1);
+    const limit = Math.floor(0xFFFFFFFF / max) * max; // rejection sampling
+    let r;
+    do {
+      cryptoObj.getRandomValues(arr);
+      r = arr[0];
+    } while (r >= limit);
+    return r % max;
+  }
+
+  function randChar(pool) {
+    return pool[randIndex(pool.length)];
+  }
+
+  function generateRaw(length, pool) {
+    let s = "";
+    for (let i = 0; i < length; i++) s += randChar(pool);
+    return s;
+  }
+
+  function splitEvenly(total, groups) {
+    groups = Math.max(1, Math.min(groups, total));
+    const base = Math.floor(total / groups);
+    const rem  = total % groups; // первые rem групп получат +1 символ
+    return Array.from({ length: groups }, (_, i) => base + (i < rem ? 1 : 0));
+  }
+
+  function chunkBySizes(s, sizes) {
+    const out = [];
+    let idx = 0;
+    for (const size of sizes) {
+      out.push(s.slice(idx, idx + size));
+      idx += size;
+    }
+    return out;
+  }
+
+  function generatePassword(length, groups, opts) {
+    if (!Number.isFinite(length) || length < 1) length = 12;
+    if (!Number.isFinite(groups) || groups < 1) groups = 3;
+    if (groups > length) groups = length;
+
+    const pool = buildCharset(opts);
+    if (!pool || pool.length === 0) {
+      return "Набор символов пуст";
+    }
+
+    const raw = generateRaw(length, pool);
+    const sizes = splitEvenly(length, groups);
+    const parts = chunkBySizes(raw, sizes);
+    return parts.join("-");
+  }
+
+  // Копирование в буфер обмена
+  async function copyToClipboard(text) {
+    if (!text) return false;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch (_) { /* fall back */ }
+
+    // Fallback для старых браузеров
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function setBtnState(btn, text, ms = 900) {
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = text;
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.disabled = false;
+    }, ms);
+  }
+
+  function updateOnce(optsFromUI = true) {
+    const length = readInt($("length"), 12, 1, 128);
+    const groups = readInt($("groups"), 3, 1, 64);
+    const opts = optsFromUI ? {
+      excludeAmbiguous: $("excludeAmbiguous").checked,
+      includeSpecials: $("includeSpecials").checked
+    } : optsFromUI;
+
+    const pwd = generatePassword(length, groups, opts);
+    $("passwordOutput").textContent = pwd;
+    return pwd;
+  }
+
+  async function handleGenerateAndCopy() {
+    const pwd = updateOnce(true);
+    const ok = await copyToClipboard(pwd);
+    if (ok) setBtnState($("generateBtn"), "Скопировано ✓");
+  }
+
+  async function handleCopyCurrent() {
+    const txt = $("passwordOutput").textContent.trim();
+    if (!txt || txt === PLACEHOLDER) {
+      // если ещё нет пароля — сгенерируем и скопируем
+      return handleGenerateAndCopy();
+    }
+    const ok = await copyToClipboard(txt);
+    if (ok) setBtnState($("copyBtn"), "Готово ✓");
+  }
+
+  function wireEvents() {
+    $("generateBtn").addEventListener("click", handleGenerateAndCopy);
+    $("copyBtn").addEventListener("click", handleCopyCurrent);
+
+    $("excludeAmbiguous").addEventListener("change", updateOnce);
+    $("includeSpecials").addEventListener("change", updateOnce);
+    $("length").addEventListener("change", updateOnce);
+    $("groups").addEventListener("change", updateOnce);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    wireEvents();
+    updateOnce(true); // мгновенная генерация при открытии
+  });
+})();

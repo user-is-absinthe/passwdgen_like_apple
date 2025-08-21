@@ -1,389 +1,144 @@
-/*
-CSS RESET
-http://meyerweb.com/eric/tools/css/reset/
-v2.0 | 20110126
-License:  none (public domain)
- */
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+:root {
+  --gap: 14px;
+  --radius: 12px;
+  --input-font-size: 16px; /* увеличенный шрифт в полях */
 }
 
-/* HTML5 display-role reset for older browsers */
-article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
-	display: block;
-}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
 
 body {
-	line-height: 1;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: #0f1115;
+  color: #e8e8ea;
 }
 
-ol,ul {
-	list-style: none;
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 20px 24px;
 }
 
-blockquote,q {
-	quotes: none;
+h1 {
+  margin: 0 0 16px;
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  color: #f3f4f6;
 }
 
-blockquote:before,blockquote:after,q:before,q:after {
-	content: '';
-	content: none;
+/* Панель управления */
+.controls {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: var(--gap);
+  align-items: end;
+  margin-bottom: 12px;
 }
 
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
+.field {
+  display: grid;
+  gap: 6px;
 }
 
-/* CSS Animations */
-@keyframes "login" {
- 0% {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-   	filter: alpha(opacity=0);
-   	opacity: 0;
-   	margin-top: -50px;
- }
- 100% {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-   	filter: alpha(opacity=100);
-   	opacity: 1;
-   	margin-top: -75px;
- }
-
+label {
+  font-size: 13px;
+  color: #c6c7cb;
 }
 
-@-moz-keyframes login {
- 0% {
-   filter: alpha(opacity=0);
-   opacity: 0;
-   margin-top: -50px;
- }
- 100% {
-   filter: alpha(opacity=100);
-   opacity: 1;
-   margin-top: -75px;
- }
-
+input[type="number"] {
+  background: #171a21;
+  border: 1px solid #2a2f3a;
+  color: #e8e8ea;
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: var(--input-font-size);
+  outline: none;
 }
 
-@-webkit-keyframes "login" {
- 0% {
-   filter: alpha(opacity=0);
-   opacity: 0;
-   margin-top: -50px;
- }
- 100% {
-   filter: alpha(opacity=100);
-   opacity: 1;
-   margin-top: -75px;
- }
-
+input[type="number"]:focus {
+  border-color: #3b82f6;
 }
 
-@-ms-keyframes "login" {
- 0% {
-   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-   filter: alpha(opacity=0);
-   opacity: 0;
-   margin-top: -50px;
- }
- 100% {
-   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-   filter: alpha(opacity=100);
-   opacity: 1;
-   margin-top: -75px;
- }
-
+/* Чекбоксы */
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 2px;
+  font-size: 14px;
+  color: #d6d7db;
+}
+.check input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #2563eb;
+  cursor: pointer;
 }
 
-@-o-keyframes "login" {
- 0% {
-   filter: alpha(opacity=0);
-   opacity: 0;
-   margin-top: -50px;
- }
- 100% {
-   filter: alpha(opacity=100);
-   opacity: 1;
-   margin-top: -75px;
- }
-
-}
-@keyframes "htitle" {
- 0% {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-   	filter: alpha(opacity=0);
-    opacity: 0;
-    margin-top: -132px;
- }
- 100% {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-   	filter: alpha(opacity=100);
-      opacity: 1;
-   margin-top: -157px;
- }
-
+/* Вывод пароля — по центру */
+.password-output {
+  margin-top: 10px;
+  background: #171a21;
+  border: 1px solid #2a2f3a;
+  border-radius: var(--radius);
+  padding: 16px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 24px;
+  letter-spacing: .5px;
+  text-align: center;
+  word-break: break-all;
 }
 
-@-moz-keyframes htitle {
- 0% {
-   filter: alpha(opacity=0);
-   opacity: 0;
-   margin-top: -132px;
- }
- 100% {
-   filter: alpha(opacity=100);
-      opacity: 1;
-   margin-top: -157px;
- }
-
+/* Кнопки под выводом пароля */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 14px;
 }
 
-@-webkit-keyframes "htitle" {
- 0% {
-   filter: alpha(opacity=0);
-   opacity: 0;
-   margin-top: -132px;
- }
- 100% {
-   filter: alpha(opacity=100);
-      opacity: 1;
-   margin-top: -157px;
- }
+/* БОЛЬШАЯ основная кнопка */
+.primary-btn {
+  background: #2563eb;
+  color: white;
+  border: 0;
+  border-radius: 16px;
+  padding: 16px 28px;   /* больше */
+  font-size: 18px;      /* крупнее */
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, .28);
+  transition: transform .05s ease, opacity .15s ease;
+}
+.primary-btn:hover { opacity: .95; }
+.primary-btn:active { transform: translateY(1px); }
 
+/* Вторая кнопка — спокойнее */
+.secondary-btn {
+  background: transparent;
+  color: #e8e8ea;
+  border: 1px solid #2a2f3a;
+  border-radius: 14px;
+  padding: 14px 22px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.secondary-btn:hover { border-color: #3b82f6; }
+
+/* Подвал */
+.credits {
+  text-align: center;
+  opacity: .7;
+  font-size: 12px;
+  padding: 12px 0 24px;
 }
 
-@-ms-keyframes "htitle" {
- 0% {
-   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-   filter: alpha(opacity=0);
-   opacity: 0;
-   margin-top: -132px;
- }
- 100% {
-   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-   filter: alpha(opacity=100);
-      opacity: 1;
-   margin-top: -157px;
- }
-
-}
-
-@-o-keyframes "htitle" {
- 0% {
-   filter: alpha(opacity=0);
-   opacity: 0;
-   margin-top: -132px;
- }
- 100% {
-   filter: alpha(opacity=100);
-      opacity: 1;
-   margin-top: -157px;
- }
-
-}
-/* Main CSS */
-* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
-
-body {
-	font-family: sans-serif;
-	background-color: #323B55;
-}
-
-#slick-login {
-	width: 220px;
-	height: 155px;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-left: -110px;
-	margin-top: -75px;
-
-	-webkit-animation: login 1s ease-in-out;
-	-moz-animation: login 1s ease-in-out;
-	-ms-animation: login 1s ease-in-out;
-	-o-animation: login 1s ease-in-out;
-	animation: login 1s ease-in-out;
-}
-
-#slick-login label {
-	display: none;
-}
-
-.placeholder {
-    color: #444;
-}
-
-#slick-login input[type="text"],#slick-login input[type="password"] {
-	width: 100%;
-	height: 40px;
-	positon: relative;
-	margin-top: 7px;
-	font-size: 14px;
-	color: #444;
-	outline: none;
-	border: 1px solid rgba(0, 0, 0, .49);
-
-	padding-left: 20px;
-	
-	-webkit-background-clip: padding-box;
-	-moz-background-clip: padding-box;
-	background-clip: padding-box;
-	border-radius: 6px;
-
-	background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
-	background-image: -moz-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
-	background-image: -o-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
-	background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
-	background-image: linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
-
-	-webkit-box-shadow: inset 0px 2px 0px #d9d9d9;
-	box-shadow: inset 0px 2px 0px #d9d9d9;
-
-	-webkit-transition: all .1s ease-in-out;
-	-moz-transition: all .1s ease-in-out;
-	-o-transition: all .1s ease-in-out;
-	-ms-transition: all .1s ease-in-out;
-	transition: all .1s ease-in-out;
-}
-
-#slick-login input[type="text"]:focus,#slick-login input[type="password"]:focus {
-	-webkit-box-shadow: inset 0px 2px 0px #a7a7a7;
-	box-shadow: inset 0px 2px 0px #a7a7a7;
-}
-
-#slick-login input:first-child {
-	margin-top: 0px;
-}
-
-#slick-login input[type="button"] {
-	width: 100%;
-	height: 50px;
-	margin-top: 7px;
-	color: #fff;
-	font-size: 18px;
-	font-weight: bold;
-	text-shadow: 0px -1px 0px #5b6ddc;
-	outline: none;
-	border: 1px solid rgba(0, 0, 0, .49);
-
-	-webkit-background-clip: padding-box;
-	-moz-background-clip: padding-box;
-	background-clip: padding-box;
-	border-radius: 6px;
-
-	background-color: #5466da;
-	background-image: -webkit-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
-	background-image: -moz-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
-	background-image: -o-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
-	background-image: -ms-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
-	background-image: linear-gradient(bottom, #5466da 0%, #768ee4 100%);
-	
-	-webkit-box-shadow: inset 0px 1px 0px #9ab1ec;
-	box-shadow: inset 0px 1px 0px #9ab1ec;
-	
-	cursor: pointer;
-
-	-webkit-transition: all .1s ease-in-out;
-	-moz-transition: all .1s ease-in-out;
-	-o-transition: all .1s ease-in-out;
-	-ms-transition: all .1s ease-in-out;
-	transition: all .1s ease-in-out;
-}
-
-#slick-login input[type="submit"]:hover {
-	background-color: #5f73e9;
-	background-image: -webkit-linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
-	background-image: -moz-linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
-	background-image: -o-linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
-	background-image: -ms-linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
-	background-image: linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
-
-	-webkit-box-shadow: inset 0px 1px 0px #aab9f4;
-	box-shadow: inset 0px 1px 0px #aab9f4;
-	margin-top: 10px;
-}
-
-#slick-login input[type="submit"]:active {
-	background-color: #7588e1;
-	background-image: -webkit-linear-gradient(bottom, #7588e1 0%, #7184df 100%);
-	background-image: -moz-linear-gradient(bottom, #7588e1 0%, #7184df 100%);
-	background-image: -o-linear-gradient(bottom, #7588e1 0%, #7184df 100%);
-	background-image: -ms-linear-gradient(bottom, #7588e1 0%, #7184df 100%);
-	background-image: linear-gradient(bottom, #7588e1 0%, #7184df 100%);
-
-	-webkit-box-shadow: inset 0px 1px 0px #93a9e9;
-	box-shadow: inset 0px 1px 0px #93a9e9;
-}
-
-@-webkit-keyframes slideOut{
-	0%{top:-30px; opacity: 0;}
-	100%{top:0px; opacity: 1;}
-}
-.footer {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  margin: 5px;
-  color: rgb(216, 216, 216);
-}
-.htitle
-{
-    color:  rgb(216, 216, 216);
-    font-size: 22pt;
-    left: 50%; 
-    top: 50%; 
-    width: 447px; height: 155px; 
-    position: absolute; 
-    left: 50%; 
-    top: 50%; 
-    margin-left: -200px; 
-    margin-top: -157px; -webkit-animation: htitle 1s ease-in-out; -moz-animation: htitle 1s ease-in-out; -ms-animation: htitle 1s ease-in-out; -o-animation: htitle 1s ease-in-out; animation: htitle 1s ease-in-out;
-
-}
-
-output {
-    width: 100%;
-    height: 45px;
-    positon: relative;
-    margin-top: 7px;
-    font-size: 18px;
-    color: #444;
-    outline: none;
-    border: 1px solid rgba(0, 0, 0, .49);
-
-    padding-left: 20px;
-
-    -webkit-background-clip: padding-box;
-    -moz-background-clip: padding-box;
-    background-clip: padding-box;
-    border-radius: 6px;
-
-    background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
-    background-image: -moz-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
-    background-image: -o-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
-    background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
-    background-image: linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
-
-    -webkit-box-shadow: inset 0px 2px 0px #d9d9d9;
-    box-shadow: inset 0px 2px 0px #d9d9d9;
-
-    -webkit-transition: all .1s ease-in-out;
-    -moz-transition: all .1s ease-in-out;
-    -o-transition: all .1s ease-in-out;
-    -ms-transition: all .1s ease-in-out;
-    transition: all .1s ease-in-out;
-
-    width: 220px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -110px;
-    margin-top: -75px;
+/* Адаптация */
+@media (max-width: 920px) {
+  .controls { grid-template-columns: 1fr 1fr; }
+  .primary-btn { width: 100%; }
+  .secondary-btn { width: 100%; }
+  .actions { flex-direction: column; }
 }

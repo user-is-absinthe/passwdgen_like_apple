@@ -3,13 +3,10 @@
 
 Отличительная черта - ставит "-" каждые 4 символа, для удобства написания (привет, Google!).
 
-Пример работы:
+Пример работы с параметрами "по умолчанию":
 
-`a2tC-DqkL-kKGz-K6a5`
+`VPFR-CPvt-7XRR`
 
 Заходить сюда:
 
 https://user-is-absinthe.github.io/passwdgen_like_apple/
-
-Стиль взят с генератора imei, спасибо kolyanok
-https://wpimeigenerator.github.io

@@ -1,46 +1,67 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Apple-like password generator</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="generator.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple-like password generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="container">
-    <h1>Apple-like password generator</h1>
-
-    <form id="controls" class="controls" onsubmit="return false;">
-      <div class="field">
-        <label for="length">Длина (без тире)</label>
-        <input id="length" type="number" min="4" max="128" step="1" value="12" />
-      </div>
-
-      <div class="field">
-        <label for="groups">Количество групп</label>
-        <input id="groups" type="number" min="1" max="12" step="1" value="3" />
-      </div>
-
-      <label class="check" title="Исключить 0/O, 1/l/I, o/i">
-        <input id="excludeAmbiguous" type="checkbox" checked />
-        Исключать двусмысленные
-      </label>
-
-      <label class="check" title="Добавить символы вроде !@#$… (тире исключено)">
-        <input id="includeSpecials" type="checkbox" />
-        Добавить спецсимволы
-      </label>
-    </form>
-
-    <div id="passwordOutput" class="password-output" aria-live="polite" aria-atomic="true">
-      — — —
+    <div class="container">
+        <h1>🔐 Генератор паролей</h1>
+        
+        <div class="controls">
+            <div class="field">
+                <label for="length">Длина (без тире)</label>
+                <input type="number" id="length" value="12" min="1" max="128">
+            </div>
+            
+            <div class="field">
+                <label for="groups">Количество групп</label>
+                <input type="number" id="groups" value="3" min="1" max="64">
+            </div>
+            
+            <div class="field">
+                <label class="check">
+                    <input type="checkbox" id="excludeAmbiguous" checked>
+                    Исключать двусмысленные
+                </label>
+            </div>
+            
+            <div class="field">
+                <label class="check">
+                    <input type="checkbox" id="includeSpecials">
+                    Добавить спецсимволы
+                </label>
+            </div>
+            
+            <div class="field">
+                <label class="check">
+                    <input type="checkbox" id="requireUppercase">
+                    Обязательная заглавная
+                </label>
+            </div>
+            
+            <div class="field">
+                <label class="check">
+                    <input type="checkbox" id="requireDigit">
+                    Обязательная цифра
+                </label>
+            </div>
+        </div>
+        
+        <div class="password-output" id="passwordOutput">— — —</div>
+        
+        <div class="actions">
+            <button class="primary-btn" id="generateBtn">Сгенерировать и скопировать</button>
+            <button class="secondary-btn" id="copyBtn">Копировать</button>
+        </div>
+        
+        <div class="credits">
+            Apple-like Password Generator
+        </div>
     </div>
-
-    <div class="actions">
-      <button id="generateBtn" type="button" class="primary-btn">Сгенерировать и скопировать</button>
-      <button id="copyBtn" type="button" class="secondary-btn" aria-label="Скопировать текущий пароль">Копировать</button>
-    </div>
-  </main>
+    
+    <script src="generator.js"></script>
 </body>
 </html>

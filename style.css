@@ -1,144 +1,206 @@
 :root {
-  --gap: 14px;
-  --radius: 12px;
-  --input-font-size: 16px; /* увеличенный шрифт в полях */
+    --gap: 14px;
+    --radius: 12px;
+    --input-font-size: 16px;
 }
 
 * { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; }
+
+html, body { 
+    height: 100%; 
+    margin: 0; 
+}
 
 body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: #0f1115;
-  color: #e8e8ea;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: #0f1115;
+    color: #e8e8ea;
 }
 
 .container {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 32px 20px 24px;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 20px 24px;
 }
 
 h1 {
-  margin: 0 0 16px;
-  font-size: 22px;
-  font-weight: 600;
-  text-align: center;
-  color: #f3f4f6;
+    margin: 0 0 24px;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    color: #f3f4f6;
 }
 
 /* Панель управления */
 .controls {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(180px, 1fr));
-  gap: var(--gap);
-  align-items: end;
-  margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+    align-items: end;
+    margin-bottom: 16px;
 }
 
 .field {
-  display: grid;
-  gap: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 label {
-  font-size: 13px;
-  color: #c6c7cb;
+    font-size: 13px;
+    color: #c6c7cb;
 }
 
 input[type="number"] {
-  background: #171a21;
-  border: 1px solid #2a2f3a;
-  color: #e8e8ea;
-  border-radius: var(--radius);
-  padding: 12px 14px;
-  font-size: var(--input-font-size);
-  outline: none;
+    background: #171a21;
+    border: 1px solid #2a2f3a;
+    color: #e8e8ea;
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: var(--input-font-size);
+    outline: none;
+    transition: border-color 0.2s;
 }
 
 input[type="number"]:focus {
-  border-color: #3b82f6;
+    border-color: #3b82f6;
 }
 
 /* Чекбоксы */
 .check {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-bottom: 2px;
-  font-size: 14px;
-  color: #d6d7db;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: #171a21;
+    border: 1px solid #2a2f3a;
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: #d6d7db;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    height: 48px;
 }
+
+.check:hover {
+    border-color: #3b82f6;
+    background: #1a1e28;
+}
+
 .check input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: #2563eb;
-  cursor: pointer;
+    width: 18px;
+    height: 18px;
+    accent-color: #2563eb;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
-/* Вывод пароля — по центру */
+/* Вывод пароля */
 .password-output {
-  margin-top: 10px;
-  background: #171a21;
-  border: 1px solid #2a2f3a;
-  border-radius: var(--radius);
-  padding: 16px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  font-size: 24px;
-  letter-spacing: .5px;
-  text-align: center;
-  word-break: break-all;
+    background: #171a21;
+    border: 1px solid #2a2f3a;
+    border-radius: var(--radius);
+    padding: 20px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 24px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    word-break: break-all;
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Кнопки под выводом пароля */
+/* Кнопки */
 .actions {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
 }
 
-/* БОЛЬШАЯ основная кнопка */
 .primary-btn {
-  background: #2563eb;
-  color: white;
-  border: 0;
-  border-radius: 16px;
-  padding: 16px 28px;   /* больше */
-  font-size: 18px;      /* крупнее */
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(37, 99, 235, .28);
-  transition: transform .05s ease, opacity .15s ease;
+    background: #2563eb;
+    color: white;
+    border: 0;
+    border-radius: 16px;
+    padding: 16px 32px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.28);
+    transition: transform 0.05s ease, opacity 0.15s ease;
 }
-.primary-btn:hover { opacity: .95; }
-.primary-btn:active { transform: translateY(1px); }
 
-/* Вторая кнопка — спокойнее */
-.secondary-btn {
-  background: transparent;
-  color: #e8e8ea;
-  border: 1px solid #2a2f3a;
-  border-radius: 14px;
-  padding: 14px 22px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
+.primary-btn:hover { 
+    opacity: 0.95; 
 }
-.secondary-btn:hover { border-color: #3b82f6; }
+
+.primary-btn:active { 
+    transform: translateY(1px); 
+}
+
+.primary-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.secondary-btn {
+    background: transparent;
+    color: #e8e8ea;
+    border: 1px solid #2a2f3a;
+    border-radius: 14px;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.secondary-btn:hover { 
+    border-color: #3b82f6; 
+}
+
+.secondary-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
 
 /* Подвал */
 .credits {
-  text-align: center;
-  opacity: .7;
-  font-size: 12px;
-  padding: 12px 0 24px;
+    text-align: center;
+    opacity: 0.5;
+    font-size: 12px;
+    padding: 24px 0 12px;
 }
 
 /* Адаптация */
-@media (max-width: 920px) {
-  .controls { grid-template-columns: 1fr 1fr; }
-  .primary-btn { width: 100%; }
-  .secondary-btn { width: 100%; }
-  .actions { flex-direction: column; }
+@media (max-width: 768px) {
+    .controls { 
+        grid-template-columns: 1fr 1fr; 
+    }
+    
+    .primary-btn, .secondary-btn { 
+        width: 100%; 
+    }
+    
+    .actions { 
+        flex-direction: column; 
+    }
+}
+
+@media (max-width: 480px) {
+    .controls { 
+        grid-template-columns: 1fr; 
+    }
+    
+    h1 {
+        font-size: 20px;
+    }
+    
+    .password-output {
+        font-size: 18px;
+    }
 }
